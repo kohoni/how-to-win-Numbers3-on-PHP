@@ -2,4 +2,4 @@
 
 やっと乱数の生成ができたのでgithubに上げます。
 
-Finally,I generated random number(int), so I upload on github.
+Finally,I generated random number(int), so I upload scripts on github.

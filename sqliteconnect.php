@@ -39,7 +39,7 @@ try {
     )");
 
     //this table is flag.
-    //this is the main contents for progressing automatical winning numbers. id intends on raw_data's id. oh, it's sick of it. why I write it at AM00:34...... I gonna sleep after write colume name. ahhhhh. I weren't better to drink fucking starbuck's coffee. I can't sleep well...... why I'm writing shit in comment space.
+    //this is the main contents for progressing automatical winning numbers. id intends on raw_data's id. 
     $pdo->exec("CREATE TABLE IF NOT EXISTS flag_data(
         id INTEGER PRIMARY KEY AUTOINCREMENT,
         flag1 INTEGER,
@@ -55,7 +55,6 @@ try {
     )");
 
     //insert in average. so I can sleep....
-    //hey, how to write what can be under point numder on datatype?
     $pdo->exec("CREATE TABLE IF NOT EXISTS result(
         id INTEGER PRIMARY KEY AUTOINCREMENT,
         maxlag1 REAL,

@@ -6,8 +6,6 @@ from contextlib import closing
 
 #this variable 
 numbers=30001
-flagc1=1
-flagc0=0
 
 #lag1
 
@@ -99,9 +97,9 @@ def function_lag2():
          c.execute(update_iprize,tt)
       conn.commit()
       ttt=(a)
-      c.execute(update_calc1,[ttt])
+      c.execute(update_calc2,[ttt])
    conn.commit()
-   c.execute(define_calc1)
+   c.execute(define_calc2)
    conn.commit()
 
 def definelag2():
@@ -157,9 +155,9 @@ def function_lag3():
          c.execute(update_iprize,tt)
       conn.commit()
       ttt=(a)
-      c.execute(update_calc1,[ttt])
+      c.execute(update_calc3,[ttt])
    conn.commit()
-   c.execute(define_calc1)
+   c.execute(define_calc3)
    conn.commit()
 
 def definelag3():
@@ -200,16 +198,17 @@ def function_blank1():
       for row in range(1,numbers):
          i+=1
          n+=1
-         t=(i,n)
+         t=(a,numbers,n,numbers,n,numbers,n,numbers,n,numbers,n)
          update_blank1=("update raw_data set"
                         " blank1=(select case when flag1 == 1 then ?"
-                        " when (flag1 == 0) and ((select blank1 from raw_data where ? + 1)==0) then 0"
-                        " else (select blank1 from raw_data where ? + 1) - 1"
-                        " end from raw_data where id =? - ?)"
-                        "where id = ? - ?"
+                        " when (flag1 <> 1) and ((select blank1 from raw_data where id = ?+1-?)==0) then 0"
+                        " when (flag1 <> 1) and ((select blank1 from raw_data where id = ?+1-?) > 0) then (select blank1 from raw_data where id = ?+1-?)-1"
+                        " end from raw_data where id =?-?)"
+                        "where id = ?-?"
                        )
-         c.execute(update_lag3,t)
+         c.execute(update_blank1,t)
       conn.commit()
+      definelag1()
       ii=0
       for row in range(1,numbers):
          ii+=1
@@ -217,25 +216,156 @@ def function_blank1():
          c.execute(update_iprize,tt)
       conn.commit()
       ttt=(a)
-      c.execute(update_calc1,[ttt])
+      c.execute(update_calc4,[ttt])
    conn.commit()
-   c.execute(define_calc1)
+   c.execute(define_calc4)
    conn.commit()
 
-def definelag3():
+def defineblank1():
    i=0
    n=0
    for row in range(1,numbers):
       i+=1
       n+=1
-      tttt=(i,n)
-      update_lag3=("update raw_data set"
-                   " lag3=(select blank3"
-                   " from raw_data limit 1 offset ((select maxlag3 from result where id = 1)+?-1))"
-                   "where id =?"
-                  )
-      c.execute(update_lag3,tttt)
+      t=(numbers,n,numbers,n,numbers,n,numbers,n,numbers,n)
+      update_blank1=("update raw_data set"
+                     " blank1=(select case when flag1 == 1 then (select maxblank1 from result where id = 1)"
+                     " when (flag1 <> 1) and ((select blank1 from raw_data where id = ?+1-?)==0) then 0"
+                     " when (flag1 <> 1) and ((select blank1 from raw_data where id = ?+1-?) > 0) then (select blank1 from raw_data where id = ?+1-?)-1"
+                     " end from raw_data where id =?-?)"
+                     "where id = ?-?"
+                    )
+      c.execute(update_blank1,t)
    conn.commit()
+   definelag1()
+   ii=0
+   for row in range(1,numbers):
+      ii+=1
+      tt=(ii,ii)
+      c.execute(update_iprize,tt)
+   conn.commit()
+
+#blank2
+
+def function_blank2():
+
+   i=1
+   n=1
+   #lag3
+   a=0
+   for row in range(0,30):
+      a+=1
+      #i = lag value
+      i=a-1
+      n=0
+      print(i)
+      for row in range(1,numbers):
+         i+=1
+         n+=1
+         t=(a,numbers,n,numbers,n,numbers,n,numbers,n,numbers,n)
+         update_blank2=("update raw_data set"
+                        " blank2=(select case when flag1 == 1 then ?"
+                        " when (flag1 <> 1) and ((select blank2 from raw_data where id = ?+1-?)==0) then 0"
+                        " when (flag1 <> 1) and ((select blank2 from raw_data where id = ?+1-?) > 0) then (select blank2 from raw_data where id = ?+1-?)-1"
+                        " end from raw_data where id =?-?)"
+                        "where id = ?-?"
+                       )
+         c.execute(update_blank2,t)
+      conn.commit()
+      definelag2()
+      ii=0
+      for row in range(1,numbers):
+         ii+=1
+         tt=(ii,ii)
+         c.execute(update_iprize,tt)
+      conn.commit()
+      ttt=(a)
+      c.execute(update_calc5,[ttt])
+   conn.commit()
+   c.execute(define_calc5)
+   conn.commit()
+
+def defineblank2():
+   i=0
+   n=0
+   for row in range(1,numbers):
+      i+=1
+      n+=1
+      t=(numbers,n,numbers,n,numbers,n,numbers,n,numbers,n)
+      update_blank2=("update raw_data set"
+                     " blank2=(select case when flag1 == 1 then (select maxblank2 from result where id = 1)"
+                     " when (flag1 <> 1) and ((select blank2 from raw_data where id = ?+1-?)==0) then 0"
+                     " when (flag1 <> 1) and ((select blank2 from raw_data where id = ?+1-?) > 0) then (select blank2 from raw_data where id = ?+1-?)-1"
+                     " end from raw_data where id =?-?)"
+                     "where id = ?-?"
+                    )
+      c.execute(update_blank2,t)
+   conn.commit()
+   definelag2()
+   ii=0
+   for row in range(1,numbers):
+      ii+=1
+      tt=(ii,ii)
+      c.execute(update_iprize,tt)
+   conn.commit()
+
+#blank3
+
+def function_blank3():
+
+   i=1
+   n=1
+   #lag3
+   a=0
+   for row in range(0,30):
+      a+=1
+      #i = lag value
+      i=a-1
+      n=0
+      print(i)
+      for row in range(1,numbers):
+         i+=1
+         n+=1
+         t=(a,numbers,n,numbers,n,numbers,n,numbers,n,numbers,n)
+         update_blank3=("update raw_data set"
+                        " blank3=(select case when flag1 == 1 then ?"
+                        " when (flag1 <> 1) and ((select blank3 from raw_data where id = ?+1-?)==0) then 0"
+                        " when (flag1 <> 1) and ((select blank3 from raw_data where id = ?+1-?) > 0) then (select blank3 from raw_data where id = ?+1-?)-1"
+                        " end from raw_data where id =?-?)"
+                        "where id = ?-?"
+                       )
+         c.execute(update_blank3,t)
+      conn.commit()
+      definelag3()
+      ii=0
+      for row in range(1,numbers):
+         ii+=1
+         tt=(ii,ii)
+         c.execute(update_iprize,tt)
+      conn.commit()
+      ttt=(a)
+      c.execute(update_calc6,[ttt])
+   conn.commit()
+   c.execute(define_calc6)
+   conn.commit()
+
+def defineblank3():
+   i=0
+   n=0
+   for row in range(1,numbers):
+      i+=1
+      n+=1
+      t=(numbers,n,numbers,n,numbers,n,numbers,n,numbers,n)
+      update_blank3=("update raw_data set"
+                     " blank3=(select case when flag1 == 1 then (select maxblank3 from result where id = 1)"
+                     " when (flag1 <> 1) and ((select blank3 from raw_data where id = ?+1-?)==0) then 0"
+                     " when (flag1 <> 1) and ((select blank3 from raw_data where id = ?+1-?) > 0) then (select blank3 from raw_data where id = ?+1-?)-1"
+                     " end from raw_data where id =?-?)"
+                     "where id = ?-?"
+                    )
+      c.execute(update_blank3,t)
+   conn.commit()
+   definelag3()
    ii=0
    for row in range(1,numbers):
       ii+=1
@@ -264,6 +394,16 @@ update_calc2=("update calc set"
 update_calc3=("update calc set"
               " calclag3=(select avg(iprize) from raw_data) where id = ?"
              )
+update_calc4=("update calc set"
+              " calcblank1=(select avg(iprize) from raw_data) where id = ?"
+             )
+update_calc5=("update calc set"
+              " calcblank2=(select avg(iprize) from raw_data) where id = ?"
+             )
+update_calc6=("update calc set"
+              " calcblank3=(select avg(iprize) from raw_data) where id = ?"
+             )
+
 
 define_calc1=("update result set"
 	          " maxlag1=(select id from calc where calclag1=(select max(calclag1)from calc))"
@@ -274,6 +414,16 @@ define_calc2=("update result set"
 define_calc3=("update result set"
 	          " maxlag3=(select id from calc where calclag3=(select max(calclag3)from calc))"
 	          "where id = 1")
+define_calc4=("update result set"
+	          " maxblank1=(select id from calc where calcblank1=(select max(calcblank1)from calc))"
+	          "where id = 1")
+define_calc5=("update result set"
+	          " maxblank2=(select id from calc where calcblank2=(select max(calcblank2)from calc))"
+	          "where id = 1")
+define_calc6=("update result set"
+	          " maxblank3=(select id from calc where calcblank3=(select max(calcblank3)from calc))"
+	          "where id = 1")
+
 
 ################################################################################################################
 
@@ -304,6 +454,12 @@ try:
       definelag2()
       function_lag3()
       definelag3()
+      function_blank1()
+      defineblank1()
+      function_blank2()
+      defineblank2()
+      function_blank3()
+      defineblank3()
 
       #lag2
       conn.close()
